@@ -19,33 +19,33 @@ The repository includes:
 ## Part I. Model construction
 
 Benchmark AMP datasets
-↓
+➡
 Feature extraction
-↓
+➡
 Binary AMP prediction model
-↓
+➡
 Multi-label activity prediction model
-↓
+➡
 Trained models
 
 ## Part II. Candidate peptide discovery
 
 Metagenomic proteins
-↓
+➡
 SignalP 
-↓
+➡
 TMHMM
-↓
+➡
 Length filtering 
-↓
+➡
 PSORTb 
-↓
+➡
 Candidate secreted peptides
-↓
+➡
 Binary AMP prediction
-↓
+➡
 Multi-label activity prediction
-↓
+➡
 Final candidate peptide resources
 
 ---
