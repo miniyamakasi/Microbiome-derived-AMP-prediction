@@ -1,15 +1,24 @@
 #!/usr/bin/env bash
-# conda activate MLamp
-set -e 
+set -euo pipefail
 
-data=$(dirname $PWD);
-group=$1;
-BIN=/home/Metagenome/LiuQ/ML-AMP/Model
-model_path=/home/Metagenome/LiuQ/ML-AMP/Model/best_models
-[ ! -d $data/6_Multi/$group ] && mkdir -p $data/6_Multi/$group
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+REPO_DIR="$(cd "$SCRIPT_DIR/.." && pwd)"
+GROUP="${1:?Usage: $0 <group> [project_work_directory]}"
+WORK_ROOT="${2:-$PWD}"
 
-for i in `ls $data/5_Binary/$group/*_binary.fasta`;
-do
-	ID=$(basename $i _binary.fasta);
-	python $BIN/predict.py -i $i -p multiple -m $model_path -o $data/6_Multi/$group
+PREDICT_SCRIPT="$REPO_DIR/prediction/predict.py"
+MODEL_DIR="$REPO_DIR/best_Model"
+INPUT_DIR="$WORK_ROOT/5_Binary/$GROUP"
+OUTPUT_DIR="$WORK_ROOT/6_Multi/$GROUP"
+mkdir -p "$OUTPUT_DIR"
+
+[[ -f "$PREDICT_SCRIPT" ]] || { echo "ERROR: missing $PREDICT_SCRIPT" >&2; exit 1; }
+[[ -d "$MODEL_DIR" ]] || { echo "ERROR: missing $MODEL_DIR" >&2; exit 1; }
+
+shopt -s nullglob
+files=("$INPUT_DIR"/*_binary.fasta)
+(( ${#files[@]} > 0 )) || { echo "ERROR: no *_binary.fasta files in $INPUT_DIR" >&2; exit 1; }
+
+for fasta in "${files[@]}"; do
+  python "$PREDICT_SCRIPT" -i "$fasta" -p multiple -m "$MODEL_DIR" -o "$OUTPUT_DIR"
 done
