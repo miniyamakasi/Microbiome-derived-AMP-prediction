@@ -57,7 +57,7 @@ Final candidate peptide resources
 ├── Secreted_peptide_analysis/    # Secreted peptide screening pipeline
 ├── feature_extraction/           # Feature extraction scripts
 ├── prediction/                   # Model training and prediction scripts
-├── best_model/                   # Trained models
+├── best_Model/                   # Trained models
 └── example_data/                 # Example input and output files
 ```
 
